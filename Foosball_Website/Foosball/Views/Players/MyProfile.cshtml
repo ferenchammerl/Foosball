@@ -6,10 +6,14 @@
 
 }
 
-<h2>My Profile</h2>
+<h2 class="text-vertical-center">My Profile</h2>
 
-
-@foreach (PlayerGame playerGame in Model.PlayerGames)
-{
-    @Html.Partial("~/Views/Games/NakedGameDetails.cshtml", playerGame.Game)
-}
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="formbox col-md-4">
+        @foreach (PlayerGame playerGame in Model.PlayerGames)
+        {
+            @Html.Partial("~/Views/Games/NakedGameDetails.cshtml", playerGame.Game)
+        }
+</div>
+</div>

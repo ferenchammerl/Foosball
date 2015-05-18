@@ -1,5 +1,5 @@
 ﻿body {
-    padding-top: 50px;
+    padding-top: 0;
     padding-bottom: 20px;
 }
 
@@ -35,10 +35,13 @@ html,
 body {
   width: 100%;
   height: 100%;
-}
-body {
   font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
+
+.text-center{
+    padding-top: 10px;
+}
+
 .text-vertical-center {
   display: normal;
   text-align: center;
@@ -60,7 +63,7 @@ body {
 }
 /* Custom Button Styles */
 .btn-dark {
-  border-radius: 0;
+  border-radius: 3px;
   color: #fff;
   background-color: rgba(0, 0, 0, 0.4);
 }
@@ -71,7 +74,7 @@ body {
   background-color: rgba(0, 0, 0, 0.7);
 }
 .btn-light {
-  border-radius: 0;
+  border-radius: 3px;
   color: #333;
   background-color: #ffffff;
 }
@@ -96,3 +99,16 @@ header {
     -o-background-size: cover;
 }
 
+.indexrow{
+    padding-top: 200px;
+}
+
+.formbox{
+    background-color: #ffffff;
+    opacity: 0.9;
+    border-radius: 10px;
+}
+
+.navbar{
+    margin-bottom: 10px;
+}

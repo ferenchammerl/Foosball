@@ -8,31 +8,11 @@
 
         <h3>Claim the top of the highscore!</h3>
         <br>
-        <a href="#" class="btn btn-light btn-lg" data-toggle="modal" data-target="#loginModal">Log in</a>
-        <a href="#" class="btn btn-dark btn-lg" data-toggle="modal" data-target="#registerModal">Register</a>
-    </div>
+        
+        @Html.ActionLink("Login", "Login", "Account", new {}, new { @class = "btn btn-light btn-lg" })
+        @Html.ActionLink("Register", "Register", "Account", new { }, new { @class = "btn btn-dark btn-lg"})
 
-    @*@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })
-        @Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })*@
 
-    <!-- Login Modal -->
-    <div class="modal fade hidescroll" id="loginModal" role="dialog" aria-labelledby="logModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-              @*  @Html.Partial("~/Views/Modal/LoginModal.cshtml")*@
-            </div>
-        </div>
-    </div>
-
-    <!-- Register Modal -->
-    <div class="modal fade hidescroll" id="registerModal" role="dialog" aria-labelledby="regModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-               @* @Html.Partial("~/Views/Modal/RegisterModal.cshtml")*@
-            </div>
-        </div>
     </div>
 
 </header>

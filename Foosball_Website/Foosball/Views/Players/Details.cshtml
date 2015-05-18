@@ -4,39 +4,43 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h2 class="text-vertical-center">Details</h2>
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="formbox col-md-4">
+        <div>
+            <h4 class="text-center">Player</h4>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Elo)
+                </dt>
 
-<div>
-    <h4>Player</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Elo)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Elo)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Elo)
-        </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Username)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Username)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Username)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Username)
-        </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.ApplicationUserId)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ApplicationUserId)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.ApplicationUserId)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.ApplicationUserId)
-        </dd>
-
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+            </dl>
+        </div>
+        <p>
+            @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+            @Html.ActionLink("Back to List", "Index")
+        </p>
+        </div>
+    </div>
