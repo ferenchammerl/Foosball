@@ -19,13 +19,19 @@ namespace Foosball.Controllers
         private int LastGameId { get { return !db.Games.Any() ? 0 : db.Games.ToList().Last().Id; } }
 
         // GET: Games
+        [Authorize]
         public ActionResult Index()
         {
+            var userId = HttpContext.User.Identity.GetUserId();
+            Player player = db.Players.SingleOrDefault(x => x.ApplicationUserId.Equals(userId));
+
             var games = db.Games.Include(g => g.Location);
+
             return View(games.ToList());
         }
 
         // GET: Games/Details/5
+        [Authorize]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -44,6 +50,10 @@ namespace Foosball.Controllers
         [Authorize]
         public ActionResult Create()
         {
+            var userId = User.Identity.GetUserId();
+            Player player = db.Players.SingleOrDefault(x => x.ApplicationUserId == userId);
+
+            if (player != null) ViewBag.un = player.Username;
             ViewBag.LocationId = new SelectList(db.Locations, "Id", "Name");
             ViewBag.PlayerId = new SelectList(db.Players, "Id", "Username");
             return View();
@@ -57,7 +67,6 @@ namespace Foosball.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,LocationId,Date,Playergames")] Game game)
         {
-            game.LocationId = 4;
             string sds = Request.Form["winners_1"];
             int[] ids =
                 new string[]
@@ -87,7 +96,7 @@ namespace Foosball.Controllers
                 {
                     db.Games.Add(game);
                     db.SaveChanges();
-                    return RedirectToAction("Index");
+                    return RedirectToAction("MyProfile","Players");
                 }
                 return View(game);
             }
@@ -97,6 +106,7 @@ namespace Foosball.Controllers
 
 
         // GET: Games/Edit/5
+        [Authorize(Roles = "Administrator")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -130,6 +140,7 @@ namespace Foosball.Controllers
         }
 
         // GET: Games/Delete/5
+        [Authorize(Roles = "Administrator")]
         public ActionResult Delete(int? id)
         {
             if (id == null)

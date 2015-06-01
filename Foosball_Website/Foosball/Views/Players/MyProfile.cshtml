@@ -6,25 +6,80 @@
 
 }
 <div class="jumbotron jumbo-marpad">
-    <h2>My Profile</h2>
-
-
-
+    <h2 class="text-center">My Profile</h2>
     @{
-        foreach (PlayerGame playerGame in Model.PlayerGames)
-        {
+        Player player = ViewBag.player;
+        var gwl = ViewBag.gwl;
+        double wonpercent = Math.Round(((double)gwl[1] / (double)gwl[0]) * 100,2);
 
-            string a = playerGame.IsConfirmed ? "confirmed" : "unconfirmed";
+        <div>
+            <h4>Username: @Html.ActionLink(@player.Username, "Edit", new { id = Model.Id }, new { @class = "btn btn-dark" })</h4>
+            <h4>Elo: @player.Elo</h4>
 
-            <h2 style="cursor: pointer" onclick="$('#div_@(playerGame.GameId)').toggle('fast');">Game  of &#9829;@(playerGame.Game.Location.Name)&#9829;</h2>
-            <div id="div_@(playerGame.GameId)" class="@(a)">
-                @Html.Partial("MyProfileGameLister", playerGame.Game)
-                <button id="@("btnConfirm_" + @playerGame.GameId)" value="@(playerGame.GameId)" onclick=" ajaxThing(this) " class="btn btn-success">Confirm</button>
+            <table class="table table-bordered">
+
+                <tr>
+                    <td>
+                        <b>
+                            Games played
+                        </b>
+                    </td>
+                    <td>
+                        <b>
+                            Won
+                        </b>
+                    </td>
+                    <td>
+                        <b>
+                            Lost
+                        </b>
+                    </td>
+                </tr>
+                <tr>
+                    <td>@gwl[0]</td>
+                    <td>@gwl[1]</td>
+                    <td>@gwl[2]</td>
+                </tr>
+            </table>
+            <div class="progress">
+                <div class="progress-bar" role="progressbar" aria-valuenow="@wonpercent" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+                    @wonpercent %
+                </div>
             </div>
+    </div>
+    }
+    
 
+
+
+    <h2>My Playes games</h2>
+    @{
+    
+        if (Model.PlayerGames.Count > 0)
+        { 
+            foreach (PlayerGame playerGame in Model.PlayerGames)
+            {
+
+                string a = playerGame.IsConfirmed ? "confirmed" : "unconfirmed";
+
+                <h2 style="cursor: pointer" onclick=" $('#div_@(playerGame.GameId)').toggle('fast'); ">Game played at @(playerGame.Game.Location.Name)</h2>
+                <div id="div_@(playerGame.GameId)" class="@(a)">
+                    @Html.Partial("MyProfileGameLister", playerGame.Game)
+                    @if (!@playerGame.IsConfirmed)
+                    {
+                        <button id="@("btnConfirm_" + @playerGame.GameId)" value="@(playerGame.GameId)" onclick=" ajaxThing(this); $(this).hide(); " class="btn btn-success">Confirm</button>
+                    }
+                </div>
+
+            }
+        }
+        else
+        {
+            <h4>No games played</h4>
         }
     }
 </div>
+
     @section Scripts {
         <script>
 

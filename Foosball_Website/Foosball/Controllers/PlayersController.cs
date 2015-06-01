@@ -55,6 +55,7 @@ namespace Foosball.Controllers
         }
 
         // GET: Players/Create
+        [Authorize(Roles = "Administrator")]
         public ActionResult Create()
         {
             return View();
@@ -65,6 +66,7 @@ namespace Foosball.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator")]
         public ActionResult Create([Bind(Include = "Id,Elo,Username")] Player player)
         {
 
@@ -86,7 +88,30 @@ namespace Foosball.Controllers
         public ActionResult MyProfile()
         {
             Player p = db.Players.ToList().First(x => x.ApplicationUserId == User.Identity.GetUserId());
-              
+            var userId = User.Identity.GetUserId();
+            Player player = db.Players.SingleOrDefault(x => x.ApplicationUserId==userId);
+
+            int[] gwl = {0,0,0};
+            if (player != null)
+            {
+                foreach (var playergame in player.PlayerGames)
+                {
+                    if (!playergame.Game.IsConfirmed()) continue;
+                    gwl[0]++;
+                    if (playergame.IsWin)
+                    {
+                        gwl[1]++;
+                    }
+                    else
+                    {
+                        gwl[2]++;
+                    }
+                }
+
+                ViewBag.player = player;
+            }
+            ViewBag.gwl = gwl;
+
             return View(p);
         }
 
@@ -109,11 +134,14 @@ namespace Foosball.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Elo,Username,ApplicationUserId")] Player player)
+        public ActionResult Edit([Bind(Include = "Username")] Player player)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(player).State = EntityState.Modified;
+                Player p = db.Players.ToList().First(x => x.ApplicationUserId == User.Identity.GetUserId());
+                p.Username = player.Username;
+                player = p;
+                db.Entry(p).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
